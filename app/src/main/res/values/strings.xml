@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">accelerate_tutorial</string>
+    <string name="x_value">X value</string>
+    <string name="y_value">Y value</string>
+    <string name="z_value">Z value</string>
+
+</resources>
