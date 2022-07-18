@@ -22,6 +22,8 @@ import android.widget.Toast;
 
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
@@ -55,7 +57,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity implements SensorEventListener {
 
-//    private static final String HOSTNAME = "http://192.168.68.141:5000/";
+    //    private static final String HOSTNAME = "http://192.168.68.141:5000/";
     private static final String TAG = "MainActivity";
 //    public static final MediaType JSON = MediaType.get("application/json; charset=utf-8");
 //    public static final int REQUEST_WRITE_STORAGE = 112;
@@ -97,118 +99,114 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 //
 //            @Override
 //            public void run() {
-//                if(listData.size() < 100){
+//                if (listData.size() < 100) {
 //                    listData = new ArrayList<>();
-//                    return ;
+//                    return;
 //                }
-////                Map<String, Object> mapObj = new HashMap<>();
-////                mapObj.put("data", listData);
-////
-////                ObjectMapper mapper = new ObjectMapper();
-////                String jsonInString = null; // JSON data
-////                try {
-////                    jsonInString = mapper.writeValueAsString(mapObj);
-////                } catch (JsonProcessingException e) {
-////                    e.printStackTrace();
-////                }
+//                Map<String, Object> mapObj = new HashMap<>();
+//                mapObj.put("data", listData);
 //
-////                Log.e(TAG, "[INFO]: " + listData.toString());
-////                String message;
-////                String delim = "-";
+//                ObjectMapper mapper = new ObjectMapper();
+//                String jsonInString = null; // JSON data
+//                try {
+//                    jsonInString = mapper.writeValueAsString(mapObj);
+//                } catch (JsonProcessingException e) {
+//                    e.printStackTrace();
+//                }
+
+//                Log.e(TAG, "[INFO]: " + listData.toString());
+//                String message;
+//                String delim = "-";
+
+
+//                    try {
+//                        FileOutputStream fw = new FileOutputStream("input.txt", true);
+////                        fos.write(text.getBytes());
+//                        int i = 0;
+//                        while (i < listData.size() - 1) {
+//                            StringBuilder sb = new StringBuilder();
+//                            sb.append(listData.get(i).getValueX());
+//                            sb.append(" ");
+//                            sb.append(listData.get(i).getValueY());
+//                            sb.append(" ");
+//                            sb.append(listData.get(i).getValueZ());
+//                            sb.append(" ");
+//                            sb.append(listData.get(i).getTimestamp());
+////                          sb.append("\n");
+//                            String res = sb.toString();
+//                            Log.e(TAG, res);
+//                            fw.write(res.getBytes());
+//                            fw.close();
+//                            i++;
 //
-//
-////                    try {
-////                        FileWriter fw = new FileWriter("input.txt", true);
-////                        BufferedWriter bw = new BufferedWriter(fw);
-////                        int i = 0;
-////                        while (i < listData.size() - 1) {
-////                            StringBuilder sb = new StringBuilder();
-////                            sb.append(listData.get(i).getValueX());
-////                            sb.append(" ");
-////                            sb.append(listData.get(i).getValueY());
-////                            sb.append(" ");
-////                            sb.append(listData.get(i).getValueZ());
-////                            sb.append(" ");
-////                            sb.append(listData.get(i).getTimestamp());
-//////                    sb.append(",");
-////                            String res = sb.toString();
-////                            Log.e(TAG, res);
-////                            bw.write(res);
-////                            i++;
-////
-////                        }
-////                        bw.close();
-////                        fw.close();
-////                    } catch (IOException e) {
-////                        e.printStackTrace();
-////                    }
-//
+//                        }
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
+
 //                Log.i(TAG, "[LENGTH]: " + String.valueOf(listData.size()));
+
+
+//                Writer output;
+//                try {
+//                    output = new BufferedWriter(new FileWriter(input.getAbsolutePath().toString()));  //clears file every time
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//                try {
+//                    output.append("New Line!");
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//                try {
+//                    output.close();
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//                try {
+//                    OutputStreamWriter outputStreamWriter = new OutputStreamWriter(context.openFileOutput("input.txt", Context.MODE_PRIVATE));
+//                    outputStreamWriter.write(listData.toString());
+//                    outputStreamWriter.close();
+//                }
+//                catch (IOException e) {
+//                    Log.e("Exception", "File write failed: " + e.toString());
+//                }
+
+
+//                RequestBody requestFile = RequestBody.create(MediaType.parse(MULTIPART_FORM_DATA), input.getAbsolutePath());
+//                MultipartBody.Part fileImage = null;
+//                try {
+//                    if (requestFile.contentLength() != 0)
+//                        fileImage = MultipartBody.Part.createFormData("file", input.getName(), requestFile);
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+
+//                OkHttpClient onOkHttpClient = new OkHttpClient();
+//                RequestBody body = RequestBody.create(jsonInString, JSON);
 //
+//                Request request = new Request
+//                        .Builder()
+//                        .url(HOSTNAME + "post_3_value")
+//                        .post(body)
+//                        .build();
 //
-//                File input = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/data/", "input.txt");
-//                Log.e(TAG, input.getAbsolutePath());
+//                onOkHttpClient.newCall(request).enqueue(new okhttp3.Callback() {
+//                    @Override
+//                    public void onFailure(@NonNull okhttp3.Call call, @NonNull IOException e) {
+//                        Log.e(TAG, "[ERROR]: Network not found");
+//                        Toast.makeText(MainActivity.this, "network not found", Toast.LENGTH_LONG).show();
+//                    }
 //
-////                Writer output;
-////                try {
-////                    output = new BufferedWriter(new FileWriter(input.getAbsolutePath().toString()));  //clears file every time
-////                } catch (IOException e) {
-////                    e.printStackTrace();
-////                }
-////                try {
-////                    output.append("New Line!");
-////                } catch (IOException e) {
-////                    e.printStackTrace();
-////                }
-////                try {
-////                    output.close();
-////                } catch (IOException e) {
-////                    e.printStackTrace();
-////                }
-////                try {
-////                    OutputStreamWriter outputStreamWriter = new OutputStreamWriter(context.openFileOutput("input.txt", Context.MODE_PRIVATE));
-////                    outputStreamWriter.write(listData.toString());
-////                    outputStreamWriter.close();
-////                }
-////                catch (IOException e) {
-////                    Log.e("Exception", "File write failed: " + e.toString());
-////                }
-//
-//
-////                RequestBody requestFile = RequestBody.create(MediaType.parse(MULTIPART_FORM_DATA), input.getAbsolutePath());
-////                MultipartBody.Part fileImage = null;
-////                try {
-////                    if (requestFile.contentLength() != 0)
-////                        fileImage = MultipartBody.Part.createFormData("file", input.getName(), requestFile);
-////                } catch (IOException e) {
-////                    e.printStackTrace();
-////                }
-//
-////                OkHttpClient onOkHttpClient = new OkHttpClient();
-////                RequestBody body = RequestBody.create(jsonInString, JSON);
-////
-////                Request request = new Request
-////                        .Builder()
-////                        .url(HOSTNAME + "post_3_value")
-////                        .post(body)
-////                        .build();
-////
-////                onOkHttpClient.newCall(request).enqueue(new okhttp3.Callback() {
-////                    @Override
-////                    public void onFailure(@NonNull okhttp3.Call call, @NonNull IOException e) {
-////                        Log.e(TAG, "[ERROR]: Network not found");
-////                        Toast.makeText(MainActivity.this, "network not found", Toast.LENGTH_LONG).show();
-////                    }
-////
-////                    @Override
-////                    public void onResponse(@NonNull okhttp3.Call call, @NonNull okhttp3.Response response) throws IOException {
-////                        String result = response.body().string();
-////                        Log.i(TAG, "[RESULT]: " + result);
-////                        txtResult.setText("Result: " + result);
-////                    }
-////                });
-//
-//                // reset data
+//                    @Override
+//                    public void onResponse(@NonNull okhttp3.Call call, @NonNull okhttp3.Response response) throws IOException {
+//                        String result = response.body().string();
+//                        Log.i(TAG, "[RESULT]: " + result);
+//                        txtResult.setText("Result: " + result);
+//                    }
+//                });
+
+        // reset data
 //                listData = new ArrayList<>();
 //            }
 //        }, 100, 5000);
@@ -233,26 +231,47 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     }
 
     public void writeToFile(View view) {
-//        String fileDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS).getPath();
-        File root = new File(Environment.getExternalStorageDirectory(), "Documents");
-        if (!root.exists()) {
-            root.mkdirs();
-        }
+        String FILE_NAME = "input.txt";
+        String pattern = "yyyy-MM-dd HH:mm:ss";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern, new Locale("vi", "VN"));
 
-//        Log.e(TAG, fileDirectory);
-        String fileName = root.getAbsolutePath() + "/input.txt";
-        File file = new File(fileName);
-//        if (file.exists()) {
+        String date = simpleDateFormat.format(new Date());
+        String text = date.toString() + " Hello\n";
+        StringBuilder sb = new StringBuilder();
+        sb.append(tvX.getText().toString());
+        sb.append(" ");
+        sb.append(tvY.getText().toString());
+        sb.append(" ");
+        sb.append(tvY.getText().toString());
+        sb.append(" ");
+        sb.append(tvTimestamp.getText().toString());
+        sb.append("\n");
+        String res = sb.toString();
+        Log.e(TAG, res);
+
+
+        FileOutputStream fos = null;
+
         try {
-            FileWriter fileWriter = new FileWriter(fileName);
-            fileWriter.write("Hi");
-            fileWriter.close();
-            Toast.makeText(getApplicationContext(), "Write successfully!", Toast.LENGTH_SHORT).show();
+            fos = new FileOutputStream(FILE_NAME, true);
+            fos.write(res.getBytes());
+
+            Toast.makeText(getApplicationContext(), "success!", Toast.LENGTH_SHORT).show();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            Toast.makeText(getApplicationContext(), "File not found", Toast.LENGTH_SHORT).show();
         } catch (IOException e) {
             e.printStackTrace();
-            Toast.makeText(getApplicationContext(), "Failed!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "IOException", Toast.LENGTH_SHORT).show();
+        } finally {
+            if (fos != null) {
+                try {
+                    fos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
-
 
     }
 
